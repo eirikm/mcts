@@ -1,52 +1,12 @@
+package haskell
+
 import java.lang.System.currentTimeMillis
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
 import scala.concurrent.duration.Duration
 
-object StdLib {
-  def unionWith[K: Ordering, V](m1: SortedMap[K, V], m2: SortedMap[K, V], op: (V, V) => V): SortedMap[K, V] = {
-    val ret = SortedMap.newBuilder[K, V]
-
-    (m1.keys ++ m2.keys).toSet.foreach { key: K =>
-      (m1.get(key), m2.get(key)) match {
-        case (Some(v1), Some(v2)) => ret += ((key, op(v1, v2)))
-        case (Some(v1), None)     => ret += ((key, v1))
-        case (None, Some(v2))     => ret += ((key, v2))
-        case (None, None)         =>
-      }
-    }
-    ret.result()
-  }
-
-  trait StdGen {
-    def nextInt: (Int, StdGen)
-
-    final def nextInt(bound: Int): (Int, StdGen) = {
-      val (i, next) = nextInt
-      (i % bound, next)
-    }
-
-    final def oneFrom[T](ts: Seq[T]): (T, StdGen) = {
-      val (idx, next) = nextInt(ts.size)
-      (ts(idx), next)
-    }
-  }
-
-  object StdGen {
-    def simple(seed: Long): StdGen = new StdGen {
-      override def nextInt: (Int, StdGen) = {
-        val seed2 = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1)
-        val ret   = math.abs((seed2 >>> 16).toInt)
-        (ret, simple(seed2))
-      }
-    }
-  }
-}
-
 object MCTS {
-
-  import StdLib._
 
   // A game specification, containing the state type, action type and player type.
   trait Spec[S, A, P] {
@@ -87,7 +47,7 @@ object MCTS {
         (mean * playCount + number) / (playCount + 1)
 
       copy(
-        meanPayouts = unionWith(payouts, meanPayouts, addToMean),
+        meanPayouts = StdLib.unionWith(payouts, meanPayouts, addToMean),
         playCount = playCount + 1
       )
     }
@@ -182,116 +142,4 @@ object MCTS {
       spec.actions(state).maxBy(a => ucb(node.children(a._2)))._2
     }
   }
-}
-
-object TicTacToe {
-  type Draw = (Int, Int)
-
-  sealed trait Player
-  case object Max extends Player
-  case object Min extends Player
-
-  sealed trait Space
-  case object Empty extends Space
-  case class Occupied(player: Player) extends Space
-
-  case class State(grid: SortedMap[Draw, Space], turn: Player)
-
-  implicit val OrderingPlayer: Ordering[Player] =
-    Ordering.by[Player, String](_.toString)
-
-  implicit val OrderingSpace: Ordering[Space] =
-    Ordering.by[Space, Option[Player]] {
-      case Occupied(p) => Option(p)
-      case Empty       => None
-    }
-
-  val EmptyState: State = {
-    val grid = for {
-      x <- 0 until 3
-      y <- 0 until 3
-    } yield (x, y) -> (Empty: Space)
-    State(SortedMap.empty[Draw, Space] ++ grid, Max)
-  }
-
-  lazy val checkMatrix: Seq[Seq[Draw]] =
-    Seq(
-      Seq((0, 0), (0, 1), (0, 2)),
-      Seq((1, 0), (1, 1), (1, 2)),
-      Seq((2, 0), (2, 1), (2, 2)),
-      Seq((0, 0), (1, 0), (2, 0)),
-      Seq((0, 1), (1, 1), (2, 1)),
-      Seq((0, 2), (1, 2), (2, 2)),
-      Seq((0, 0), (1, 1), (2, 2)),
-      Seq((0, 2), (1, 1), (2, 0))
-    )
-
-  def isLine(arr: SortedMap[Draw, Space])(check: Seq[Draw]): Option[Player] =
-    if (check.forall(c => arr(c) == Occupied(Min))) Some(Min)
-    else if (check.forall(c => arr(c) == Occupied(Max))) Some(Max)
-    else None
-
-  object Game extends MCTS.Spec[State, Draw, Player] {
-    // Returns positions where the columns are not filled up.
-    override def actions(s: State): Seq[(Double, (Int, Int))] =
-      winner(s) match {
-        case Some(_) => IndexedSeq.empty
-        case None =>
-          s.grid.toSeq.collect {
-            case (pos, Empty) => 1.0 -> pos
-          }
-      }
-
-    override def player(state: State): Player =
-      state.turn
-
-    // Returns a payout of 1 if we won, 0 if we lost.
-    override def payouts(s: State): SortedMap[Player, Double] =
-      winner(s) match {
-        case Some(Max) => SortedMap[Player, Double](Max -> 1.0, Min  -> -1.0)
-        case Some(Min) => SortedMap[Player, Double](Max -> -1.0, Min -> 1.0)
-        case None      => SortedMap[Player, Double](Max -> 0.0, Min  -> 0.0)
-      }
-
-    // Applies action a to board b.
-    override def apply(action: Draw, state: State): State =
-      State(
-        state.grid.updated(action, Occupied(state.turn)),
-        if (state.turn == Max) Min else Max
-      )
-
-    override def winner(state: State): Option[Player] =
-      checkMatrix.flatMap(c => isLine(state.grid)(c)).headOption
-  }
-}
-
-object HaskMain extends App {
-  import scala.concurrent.duration._
-
-  @tailrec
-  def continue[S, A: Ordering, P: Ordering](spec: MCTS.Spec[S, A, P])(rand: StdLib.StdGen, state: S): StdLib.StdGen = {
-
-    val mcts                 = new MCTS.MonteCarlo(spec)
-    val (newRand, finalNode) = mcts.timedMCTS(10.millis, rand, state, MCTS.Node.empty[A, P])
-
-    // Check for an inevitable tie.
-    if (spec.actions(state).isEmpty) {
-      println("It's a Tie!")
-      newRand
-    } else {
-      val computerAction = mcts.bestAction(finalNode, state)
-      println(s"${spec.player(state)} Chose: $computerAction")
-
-      val nextState = spec.apply(computerAction, state)
-      println(nextState)
-      spec.winner(nextState) match {
-        case Some(winner) =>
-          println(s"$winner won")
-          newRand
-        case None => continue(spec)(newRand, nextState)
-      }
-    }
-  }
-
-  continue(TicTacToe.Game)(StdLib.StdGen.simple(currentTimeMillis()), TicTacToe.EmptyState)
 }
