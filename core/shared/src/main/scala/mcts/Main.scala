@@ -52,7 +52,7 @@ object Main {
 
   private def summarize[Player, Action, State](
       turn:         Int,
-      newNode:      Node[Action, Player],
+      newNode:      Node[Action],
       player:       Player,
       chosenAction: Action
   ): fansi.Str = {
@@ -62,7 +62,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    step(games.TicTacToe.GameDef, 100.millis)()
+    step(games.TicTacToe.GameDef,   100.millis)()
     step(games.ConnectFour.GameDef, 2000.millis)()
   }
 }

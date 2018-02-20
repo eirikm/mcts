@@ -3,19 +3,19 @@ package mcts
 import fansi.Str
 
 object Util {
+
   /**
     * @param map Assumed to be non-empty
     */
   @inline def maxBy[@specialized(Int, AnyRef) K, V](map: debox.Map[K, V])(f: V => Double): K = {
-    var maxK: K          = map.keys(0)
+    var maxK:     K      = map.keys(0)
     var maxValue: Double = Double.MinValue
-    map.foreachKey {
-      k =>
-        val value = f(map(k))
-        if (maxValue < value) {
-          maxK = k
-          maxValue = value
-        }
+    map.foreachKey { k =>
+      val value = f(map(k))
+      if (maxValue < value) {
+        maxK     = k
+        maxValue = value
+      }
     }
 
     maxK

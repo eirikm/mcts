@@ -2,14 +2,14 @@ package mcts.engines
 
 import mcts.Util
 
-final class Node[@specialized(Int, AnyRef) Action, Player](
+final class Node[@specialized(Int, AnyRef) Action](
     val numWins:    Int,
     val numPlays:   Int,
-    val children:   debox.Map[Action, Node[Action, Player]],
+    val children:   debox.Map[Action, Node[Action]],
     val lastPayout: Int
 ) {
 
-  def withChildNode(action: Action, newChild: Node[Action, Player]): Node[Action, Player] = {
+  def withChildNode(action: Action, newChild: Node[Action]): Node[Action] = {
     val newChildren = children.copy()
     newChildren(action) = newChild
 
@@ -26,11 +26,12 @@ final class Node[@specialized(Int, AnyRef) Action, Player](
 }
 
 object Node {
+
   /**
     * Observing that an immutable tree of `Node`s can be combined,
     *  enables us to perform the tree search in parallel.
     */
-  def combine[A, P](x: Node[A, P], y: Node[A, P]): Node[A, P] =
+  def combine[A](x: Node[A], y: Node[A]): Node[A] =
     new Node(
       numWins    = x.numWins + y.numWins,
       numPlays   = x.numPlays + y.numPlays,
@@ -38,8 +39,7 @@ object Node {
       lastPayout = math.max(x.lastPayout, y.lastPayout)
     )
 
-  private def combineChildren[A, P](xs: debox.Map[A, Node[A, P]],
-                                    ys: debox.Map[A, Node[A, P]]): debox.Map[A, Node[A, P]] = {
+  private def combineChildren[A, P](xs: debox.Map[A, Node[A]], ys: debox.Map[A, Node[A]]): debox.Map[A, Node[A]] = {
     val ret = xs.copy()
 
     ys.foreach {

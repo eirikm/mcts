@@ -11,13 +11,13 @@ class RunSeq[State, @specialized(Int, AnyRef) Action: ClassTag, Player](
 ) {
 
   /* Run monte carlo search for a given duration */
-  def timedMCTS(duration: Duration, state: State): Node[Action, Player] = {
-    val node     = new Node[Action, Player](0, 0, debox.Map.empty, 0)
+  def timedMCTS(duration: Duration, state: State): Node[Action] = {
+    val node     = new Node[Action](0, 0, debox.Map.empty, 0)
     val stopTime = currentTimeMillis + duration.toMillis
     val player   = solver.game.currentPlayer(state)
 
     @tailrec
-    def go(n: Node[Action, Player]): Node[Action, Player] = {
+    def go(n: Node[Action]): Node[Action] = {
       val newNode = solver.select(state, n, player)
 
       if (currentTimeMillis > stopTime)
@@ -29,5 +29,3 @@ class RunSeq[State, @specialized(Int, AnyRef) Action: ClassTag, Player](
     go(node)
   }
 }
-
-

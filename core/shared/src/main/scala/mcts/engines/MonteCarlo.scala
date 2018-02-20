@@ -19,7 +19,7 @@ final class MonteCarlo[State, @specialized(Int, AnyRef) Action: ClassTag, Player
     val game: Game[State, Action, Player]
 ) {
 
-  def select(currentState: State, currentNode: Node[Action, Player], player: Player): Node[Action, Player] =
+  def select(currentState: State, currentNode: Node[Action], player: Player): Node[Action] =
     game.gameResult(currentState) match {
 
       case gameEnded: GameEnded[Player] =>
@@ -49,7 +49,7 @@ final class MonteCarlo[State, @specialized(Int, AnyRef) Action: ClassTag, Player
 
             val lastPayout = game.payout(gameEnded, player)
 
-            val expanded = new Node[Action, Player](
+            val expanded = new Node[Action](
               numWins    = lastPayout,
               numPlays   = 1,
               children   = debox.Map.empty,
@@ -66,13 +66,13 @@ final class MonteCarlo[State, @specialized(Int, AnyRef) Action: ClassTag, Player
             val bestAction: Action =
               Util.maxBy(currentNode.children)(childNode => ucb(currentNode, childNode, isOpponentsTurn))
 
-            val bestActionNode: Node[Action, Player] =
+            val bestActionNode: Node[Action] =
               currentNode.children(bestAction)
 
             val nextState: State =
               game.nextState(bestAction, currentState)
 
-            val updatedActionNode: Node[Action, Player] =
+            val updatedActionNode: Node[Action] =
               select(nextState, bestActionNode, player)
 
             currentNode.withChildNode(action = bestAction, newChild = updatedActionNode)
@@ -98,7 +98,7 @@ final class MonteCarlo[State, @specialized(Int, AnyRef) Action: ClassTag, Player
   /**
     * Upper Confidence Bound 1 applied to trees
     */
-  private def ucb(parent: Node[Action, Player], child: Node[Action, Player], isOpponentsTurn: Boolean): Double = {
+  private def ucb(parent: Node[Action], child: Node[Action], isOpponentsTurn: Boolean): Double = {
     val numWins      = if (isOpponentsTurn) -child.numWins else child.numWins
     val exploitation = numWins.toDouble / child.numPlays
     val exploration  = Epsilon * math.sqrt(math.log(parent.numPlays) / child.numPlays)

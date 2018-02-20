@@ -17,13 +17,13 @@ object TicTacToe {
 
     override def nextState(a: Index, s: State): State =
       State(
-        grid = s.grid.updated(a, Occupied(s.currentPlayer)),
+        grid          = s.grid.updated(a, Occupied(s.currentPlayer)),
         currentPlayer = s.currentPlayer.other
       )
 
     override val startingState: State =
       State(
-        grid = Array2d(3, 3, Empty),
+        grid          = Array2d(3, 3, Empty),
         currentPlayer = Red
       )
   }
@@ -77,11 +77,9 @@ object TicTacToe {
       new VictoryLine(Index(0), Index(3), Index(6)),
       new VictoryLine(Index(1), Index(4), Index(7)),
       new VictoryLine(Index(2), Index(5), Index(8)),
-
       new VictoryLine(Index(0), Index(1), Index(2)),
       new VictoryLine(Index(3), Index(4), Index(5)),
       new VictoryLine(Index(6), Index(7), Index(8)),
-
       new VictoryLine(Index(0), Index(4), Index(8)),
       new VictoryLine(Index(6), Index(4), Index(2))
     )

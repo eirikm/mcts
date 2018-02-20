@@ -12,9 +12,9 @@ lazy val core = crossProject
   .crossType(CrossType.Full)
   .in(file("core"))
   .settings(commonSettings)
-    .jsSettings(
-      scalaJSUseMainModuleInitializer := true
-    )
+  .jsSettings(
+    scalaJSUseMainModuleInitializer := true
+  )
   .jvmSettings(
     scalacOptions ++=
       Seq(

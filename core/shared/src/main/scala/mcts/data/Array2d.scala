@@ -49,7 +49,7 @@ final class Array2d[@specialized T: ClassTag] private (val array: Array[T], val 
 }
 
 object Array2d {
-  @inline def apply[@specialized(Int, AnyRef) T: ClassTag](numX: Int, numY: Int, empty: T): Array2d[T] =
+  @inline def apply[@specialized(Int,              AnyRef) T: ClassTag](numX: Int, numY: Int, empty: T): Array2d[T] =
     new Array2d[T](Array.fill(numX * numY)(empty), numX, numY)
 
   type Column = Int
@@ -57,6 +57,6 @@ object Array2d {
   type Index  = Int
 
   @inline def Column(value: Int): Column = value.asInstanceOf[Column]
-  @inline def Row(value: Int): Row       = value.asInstanceOf[Row]
-  @inline def Index(value: Int): Index   = value.asInstanceOf[Index]
+  @inline def Row(value:    Int): Row    = value.asInstanceOf[Row]
+  @inline def Index(value:  Int): Index  = value.asInstanceOf[Index]
 }

@@ -2,9 +2,9 @@ package mcts.games
 
 import mcts.data.Array2d
 import mcts.data.Array2d.Index
-import mcts.{Draw, Ongoing, Winner, renderers}
+import mcts.{renderers,          Draw, Ongoing, Winner}
 import mcts.engines.{MonteCarlo, RunSeq}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{FunSuite,  Matchers}
 
 import scala.concurrent.duration._
 
@@ -15,9 +15,8 @@ class TicTacToeJsTest extends FunSuite with Matchers {
   val runner = new RunSeq(spec)
 
   test("should always favor the winning move in a game of Tic Tac Toe") {
-    val actions = 0.until(10).map {
-      _ =>
-        // format: off
+    val actions = 0.until(10).map { _ =>
+      // format: off
         val board =
           Board(
             Occupied(Blue), Occupied(Blue), Empty,
@@ -25,16 +24,15 @@ class TicTacToeJsTest extends FunSuite with Matchers {
             Occupied(Blue), Occupied(Blue), Empty
           )
         // format: on
-        runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
+      runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
     }
 
     actions.toSet should equal(Set(Index(5)))
   }
 
   test("should always block the winning move in a game of Tic Tac Toe") {
-    val actions = 0.until(10).map {
-      _ =>
-        val board =
+    val actions = 0.until(10).map { _ =>
+      val board =
         // format: off
           Board(
             Empty, Empty, Occupied(Blue),
@@ -42,7 +40,7 @@ class TicTacToeJsTest extends FunSuite with Matchers {
             Empty, Empty, Empty
           )
         // format: on
-        runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
+      runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
     }
 
     actions.toSet should equal(Set(Index(6)))
@@ -63,7 +61,7 @@ class TicTacToeJsTest extends FunSuite with Matchers {
   test("A newly created State should have all indices [0..8] as available actions.") {
     GameDef.gameResult(GameDef.startingState) match {
       case Ongoing(actions) => actions should equal(Array(0, 1, 2, 3, 4, 5, 6, 7, 8))
-      case other => fail(other.toString)
+      case other            => fail(other.toString)
     }
   }
 
@@ -90,8 +88,10 @@ class TicTacToeJsTest extends FunSuite with Matchers {
     renderers.RenderTicTacToe(state).plainText should equal(expected)
   }
 
-  test("After player 1 makes a move on index=0, and player 2 makes a move on index=8, State should have correct string representation.") {
-    val state = GameDef.nextState(8, GameDef.nextState(0, GameDef.startingState.copy(currentPlayer = Blue)))
+  test(
+    "After player 1 makes a move on index=0, and player 2 makes a move on index=8, State should have correct string representation."
+  ) {
+    val state    = GameDef.nextState(8, GameDef.nextState(0, GameDef.startingState.copy(currentPlayer = Blue)))
     val expected = """|╔═══╤═══╤═══╗
                       |│ ● │ ◌ │ ◌ │
                       |│ ◌ │ ◌ │ ◌ │
@@ -134,7 +134,8 @@ class TicTacToeJsTest extends FunSuite with Matchers {
     assert(GameDef.gameResult(GameDef.startingState.copy(grid = grid)) == Draw)
   }
 
-  def Board(s0: Space, s1: Space, s2: Space, s3: Space, s4: Space, s5: Space, s6: Space, s7: Space, s8: Space): Array2d[Space] = {
+  def Board(s0: Space, s1: Space, s2: Space, s3: Space, s4: Space, s5: Space, s6: Space, s7: Space, s8: Space)
+    : Array2d[Space] = {
     val ret = Array2d[Space](3, 3, Empty)
     ret.array(0) = s0
     ret.array(1) = s1

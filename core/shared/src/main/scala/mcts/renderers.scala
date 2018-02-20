@@ -1,6 +1,6 @@
 package mcts
 
-import fansi.{Color, Str}
+import fansi.{Color,              Str}
 import mcts.data.Array2d.{Column, Row}
 import mcts.games.ConnectFour.LastAction
 import mcts.games._
@@ -22,7 +22,7 @@ object renderers {
       case Empty            => "◌"
     }
 
-  implicit object RenderConnectFour extends Renderer[ConnectFour.State, Str]{
+  implicit object RenderConnectFour extends Renderer[ConnectFour.State, Str] {
     /* show column number or an arrow indicating last drop */
     def col(state: ConnectFour.State)(column: Column): Str =
       state.lastActionOpt match {
@@ -44,17 +44,17 @@ object renderers {
         .mkString("│ ", " │ ", " │")
 
     override def apply(state: ConnectFour.State): Str = {
-      val h1     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╔", "╤", "╗\n")
-      val h2     = 0.until(ConnectFour.NumCols).map(col(state)).mkString("║", "│", "║\n")
-      val h3     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╠", "╪", "╣\n")
-      val footer = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╚", "╧", "╝\n")
-      val table  = 0.until(ConnectFour.NumRows).map(row(state)).mkString("", "\n", "\n")
+      val h1     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╔", "╤",  "╗\n")
+      val h2     = 0.until(ConnectFour.NumCols).map(col(state)).mkString("║", "│",  "║\n")
+      val h3     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╠", "╪",  "╣\n")
+      val footer = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╚", "╧",  "╝\n")
+      val table  = 0.until(ConnectFour.NumRows).map(row(state)).mkString("",  "\n", "\n")
 
       h1 ++ h2 ++ h3 ++ table ++ footer
     }
   }
 
-  implicit object RenderTicTacToe extends Renderer[TicTacToe.State, Str]{
+  implicit object RenderTicTacToe extends Renderer[TicTacToe.State, Str] {
     /* When the game is won, render winning cells as asterisks */
     def isPartOfVictory(state: TicTacToe.State, col: Column, row: Row): Boolean =
       state.winnerOpt match {
@@ -68,9 +68,9 @@ object renderers {
         .mkString("│ ", " │ ", " │")
 
     override def apply(state: TicTacToe.State): Str = {
-      val h1     = 0.until(3).map(_ => "═══").mkString("╔", "╤", "╗\n")
-      val footer = 0.until(3).map(_ => "═══").mkString("╚", "╧", "╝\n")
-      val table  = 0.until(3).map(row(state)).mkString("", "\n", "\n")
+      val h1     = 0.until(3).map(_ => "═══").mkString("╔", "╤",  "╗\n")
+      val footer = 0.until(3).map(_ => "═══").mkString("╚", "╧",  "╝\n")
+      val table  = 0.until(3).map(row(state)).mkString("",  "\n", "\n")
       h1 ++ table ++ footer
     }
   }
