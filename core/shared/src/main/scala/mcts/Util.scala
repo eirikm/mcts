@@ -7,10 +7,10 @@ object Util {
   /**
     * @param map Assumed to be non-empty
     */
-  @inline def maxBy[K, V](map: debox.Map[K, V])(f: V => Double): K = {
-    var maxK:     K      = map.keys(0)
+  @inline def maxBy[K, V](map: Map[K, V])(f: V => Double): K = {
+    var maxK:     K      = map.head._1
     var maxValue: Double = Double.MinValue
-    map.foreachKey { k =>
+    map.keys.foreach { k =>
       val value = f(map(k))
       if (maxValue < value) {
         maxK     = k

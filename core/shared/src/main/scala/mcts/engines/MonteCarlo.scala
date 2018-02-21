@@ -52,7 +52,7 @@ final class MonteCarlo[State, Action: ClassTag, Player](
             val expanded = new Node[Action](
               numWins    = lastPayout,
               numPlays   = 1,
-              children   = debox.Map.empty,
+              children   = Map.empty,
               lastPayout = lastPayout
             )
 

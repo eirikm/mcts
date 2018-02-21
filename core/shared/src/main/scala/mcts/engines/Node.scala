@@ -5,13 +5,12 @@ import mcts.Util
 final class Node[Action](
     val numWins:    Int,
     val numPlays:   Int,
-    val children:   debox.Map[Action, Node[Action]],
+    val children:   Map[Action, Node[Action]],
     val lastPayout: Int
 ) {
 
   def withChildNode(action: Action, newChild: Node[Action]): Node[Action] = {
-    val newChildren = children.copy()
-    newChildren(action) = newChild
+    val newChildren = children.updated(action, newChild)
 
     new Node(
       children   = newChildren,
@@ -39,15 +38,16 @@ object Node {
       lastPayout = math.max(x.lastPayout, y.lastPayout)
     )
 
-  private def combineChildren[A, P](xs: debox.Map[A, Node[A]], ys: debox.Map[A, Node[A]]): debox.Map[A, Node[A]] = {
-    val ret = xs.copy()
+  private def combineChildren[A](xs: Map[A, Node[A]], ys: Map[A, Node[A]]): Map[A, Node[A]] = {
+    val ret = Map.newBuilder[A, Node[A]]
+    ret ++= xs
 
     ys.foreach {
-      case (a, node) if ret.contains(a) =>
-        ret(a) = combine(ret(a), node)
+      case (a, node) if xs.contains(a) =>
+        ret += (a -> combine(xs(a), node))
       case (a, node) =>
-        ret(a) = node
+        ret += (a -> node)
     }
-    ret
+    ret.result()
   }
 }

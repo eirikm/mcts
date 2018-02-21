@@ -3,7 +3,6 @@ val commonSettings = Seq(
   libraryDependencies ++= Seq(
     "org.typelevel"  %%% "cats-core" % "1.0.1",
     "com.lihaoyi"    %%% "pprint"    % "0.5.3",
-    "org.spire-math" %%% "debox"     % "0.8.1-SNAPSHOT",
     "org.scalatest"  %%% "scalatest" % "3.0.4" % Test
   )
 )

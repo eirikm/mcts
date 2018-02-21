@@ -12,7 +12,7 @@ class RunSeq[State, Action: ClassTag, Player](
 
   /* Run monte carlo search for a given duration */
   def timedMCTS(duration: Duration, state: State): Node[Action] = {
-    val node     = new Node[Action](0, 0, debox.Map.empty, 0)
+    val node     = new Node[Action](0, 0, Map.empty, 0)
     val stopTime = currentTimeMillis + duration.toMillis
     val player   = solver.game.currentPlayer(state)
 

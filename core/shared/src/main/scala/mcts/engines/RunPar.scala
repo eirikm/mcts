@@ -10,7 +10,7 @@ class RunPar[S, A: ClassTag, P](val solver: MonteCarlo[S, A, P], parallelism: In
 
   // Run monte carlo search until cpuTime hits a certain value.
   def timedMCTS(duration: Duration, state: S): Node[A] = {
-    val node     = new Node[A](0, 0, debox.Map.empty, 0)
+    val node     = new Node[A](0, 0, Map.empty, 0)
     val stopTime = currentTimeMillis + duration.toMillis
     val player   = solver.game.currentPlayer(state)
 
