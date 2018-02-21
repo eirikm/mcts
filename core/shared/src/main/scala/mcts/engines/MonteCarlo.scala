@@ -23,9 +23,9 @@ final class MonteCarlo[State, Action, Player](val game: Game[State, Action, Play
         val thisPayout = game.payout(gameEnded, player)
 
         new Node(
-          numWins = currentNode.numWins + thisPayout,
-          numPlays = currentNode.numPlays + 1,
-          children = currentNode.children,
+          numWins    = currentNode.numWins + thisPayout,
+          numPlays   = currentNode.numPlays + 1,
+          children   = currentNode.children,
           lastPayout = thisPayout
         )
 
@@ -47,9 +47,9 @@ final class MonteCarlo[State, Action, Player](val game: Game[State, Action, Play
             val lastPayout = game.payout(gameEnded, player)
 
             val expanded = new Node[Action](
-              numWins = lastPayout,
-              numPlays = 1,
-              children = Map.empty,
+              numWins    = lastPayout,
+              numPlays   = 1,
+              children   = Map.empty,
               lastPayout = lastPayout
             )
 

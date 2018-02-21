@@ -17,13 +17,13 @@ object TicTacToe {
 
     override def nextState(a: Index, s: State): State =
       State(
-        grid = s.grid.updated(a, Occupied(s.currentPlayer)),
+        grid          = s.grid.updated(a, Occupied(s.currentPlayer)),
         currentPlayer = s.currentPlayer.other
       )
 
     override val startingState: State =
       State(
-        grid = Array2d(3, 3, Empty),
+        grid          = Array2d(3, 3, Empty),
         currentPlayer = Red
       )
   }

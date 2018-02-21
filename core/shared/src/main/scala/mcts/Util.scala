@@ -7,13 +7,13 @@ object Util {
   /**
     * @param map Assumed to be non-empty
     */
-  @inline def maxBy[K, V](map: Map[K, V])(f: V => Double): K = {
+  def maxBy[K, V](map: Map[K, V])(f: V => Double): K = {
     var maxK:     K      = map.head._1
     var maxValue: Double = Double.MinValue
     map.keys.foreach { k =>
       val value = f(map(k))
       if (maxValue < value) {
-        maxK = k
+        maxK     = k
         maxValue = value
       }
     }

@@ -12,10 +12,10 @@ object ConnectFour {
   val LastRow:  Row = Row(NumRows - 1)
 
   val EmptyState = State(
-    board = Array2d(numX = NumCols, numY = NumRows, empty = Empty),
+    board         = Array2d(numX = NumCols, numY = NumRows, empty = Empty),
     currentPlayer = Red,
     lastActionOpt = None,
-    numRounds = 0
+    numRounds     = 0
   )
 
   final case class LastAction(player: RedBlue, column: Column, row: Row)
@@ -97,10 +97,10 @@ object ConnectFour {
       val newGrid = state.board.updated(col, row, Occupied(player))
 
       State(
-        board = newGrid,
+        board         = newGrid,
         currentPlayer = player.other,
         lastActionOpt = Some(LastAction(player, col, row)),
-        numRounds = state.numRounds + 1
+        numRounds     = state.numRounds + 1
       )
     }
   }
