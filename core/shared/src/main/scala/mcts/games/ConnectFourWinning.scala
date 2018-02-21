@@ -38,7 +38,7 @@ object ConnectFourWinning {
       RelLine(RelPoint(x =  0, y =  0), RelPoint(x =  1, y = -1), RelPoint(x =  2, y = -2), RelPoint(x = 3, y = -3)),
       RelLine(RelPoint(x = -1, y =  1), RelPoint(x =  0, y =  0), RelPoint(x =  1, y = -1), RelPoint(x = 2, y = -2)),
       RelLine(RelPoint(x = -2, y =  2), RelPoint(x = -1, y =  1), RelPoint(x =  0, y =  0), RelPoint(x = 1, y = -1)),
-      RelLine(RelPoint(x = -3, y =  3), RelPoint(x = -2, y =  2), RelPoint(x = -1, y =  1), RelPoint(x = 0, y =  0)),
+      RelLine(RelPoint(x = -3, y =  3), RelPoint(x = -2, y =  2), RelPoint(x = -1, y =  1), RelPoint(x = 0, y =  0))
       // format: on
     )
 

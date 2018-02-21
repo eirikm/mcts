@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 class TicTacToeJsTest extends FunSuite with Matchers {
   import mcts.games.TicTacToe.GameDef
 
-  val solver  = new MonteCarlo(GameDef)
+  val solver = new MonteCarlo(GameDef)
 
   test("should always favor the winning move in a game of Tic Tac Toe") {
     val actions = 0.until(10).map { _ =>

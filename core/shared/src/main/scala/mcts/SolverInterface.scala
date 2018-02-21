@@ -7,6 +7,7 @@ import scala.annotation.tailrec
 import scala.concurrent.duration._
 
 object SolverInterface {
+
   /**
     * This uses multiple groups of parameters to guide type inference
     */
@@ -17,13 +18,13 @@ object SolverInterface {
                          (implicit renderer: Renderer[State, fansi.Str]) =
   // format: on
   step(
-    solver = new MonteCarlo(game),
-    duration = duration,
-    runner = runner,
-    state = game.startingState,
-    turn = 0,
+    solver    = new MonteCarlo(game),
+    duration  = duration,
+    runner    = runner,
+    state     = game.startingState,
+    turn      = 0,
     summaries = Nil,
-    renderer = renderer
+    renderer  = renderer
   )
 
   @tailrec

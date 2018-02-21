@@ -44,11 +44,11 @@ object renderers {
         .mkString("│ ", " │ ", " │")
 
     override def apply(state: ConnectFour.State): Str = {
-      val h1     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╔", "╤", "╗\n")
-      val h2     = 0.until(ConnectFour.NumCols).map(col(state)).mkString("║", "│", "║\n")
-      val h3     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╠", "╪", "╣\n")
-      val footer = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╚", "╧", "╝\n")
-      val table  = 0.until(ConnectFour.NumRows).map(row(state)).mkString("", "\n", "\n")
+      val h1     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╔", "╤",  "╗\n")
+      val h2     = 0.until(ConnectFour.NumCols).map(col(state)).mkString("║", "│",  "║\n")
+      val h3     = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╠", "╪",  "╣\n")
+      val footer = 0.until(ConnectFour.NumCols).map(_ => "═══").mkString("╚", "╧",  "╝\n")
+      val table  = 0.until(ConnectFour.NumRows).map(row(state)).mkString("",  "\n", "\n")
 
       h1 ++ h2 ++ h3 ++ table ++ footer
     }
@@ -68,9 +68,9 @@ object renderers {
         .mkString("│ ", " │ ", " │")
 
     override def apply(state: TicTacToe.State): Str = {
-      val h1     = 0.until(3).map(_ => "═══").mkString("╔", "╤", "╗\n")
-      val footer = 0.until(3).map(_ => "═══").mkString("╚", "╧", "╝\n")
-      val table  = 0.until(3).map(row(state)).mkString("", "\n", "\n")
+      val h1     = 0.until(3).map(_ => "═══").mkString("╔", "╤",  "╗\n")
+      val footer = 0.until(3).map(_ => "═══").mkString("╚", "╧",  "╝\n")
+      val table  = 0.until(3).map(row(state)).mkString("",  "\n", "\n")
       h1 ++ table ++ footer
     }
   }
