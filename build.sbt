@@ -2,7 +2,7 @@ val commonSettings = Seq(
   scalaVersion := "2.12.4",
   libraryDependencies ++= Seq(
     "org.typelevel" %%% "cats-core" % "1.0.1",
-    "com.lihaoyi"   %%% "pprint"    % "0.5.3",
+    "com.lihaoyi"   %%% "fansi"     % "0.2.5",
     "org.scalatest" %%% "scalatest" % "3.0.4" % Test
   )
 )
@@ -25,7 +25,6 @@ lazy val core = crossProject
         "-opt:box-unbox",
         "-opt:unreachable-code",
         "-opt:redundant-casts",
-        "-Yopt-inline-heuristics:everything",
         "-opt-warnings"
       )
   )
