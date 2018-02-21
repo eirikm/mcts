@@ -8,7 +8,7 @@ import org.scalatest.{FunSuite, Matchers}
 
 import scala.concurrent.duration._
 
-class TicTacToeJsTest extends FunSuite with Matchers {
+class TicTacToeTest extends FunSuite with Matchers {
   import mcts.games.TicTacToe.GameDef
 
   val solver = new MonteCarlo(GameDef)
