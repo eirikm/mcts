@@ -7,7 +7,7 @@ object Util {
   /**
     * @param map Assumed to be non-empty
     */
-  @inline def maxBy[@specialized(Int, AnyRef) K, V](map: debox.Map[K, V])(f: V => Double): K = {
+  @inline def maxBy[K, V](map: debox.Map[K, V])(f: V => Double): K = {
     var maxK:     K      = map.keys(0)
     var maxValue: Double = Double.MinValue
     map.foreachKey { k =>

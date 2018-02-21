@@ -49,7 +49,7 @@ final class Array2d[@specialized T: ClassTag] private (val array: Array[T], val 
 }
 
 object Array2d {
-  @inline def apply[@specialized(Int,              AnyRef) T: ClassTag](numX: Int, numY: Int, empty: T): Array2d[T] =
+  @inline def apply[T: ClassTag](numX: Int, numY: Int, empty: T): Array2d[T] =
     new Array2d[T](Array.fill(numX * numY)(empty), numX, numY)
 
   type Column = Int

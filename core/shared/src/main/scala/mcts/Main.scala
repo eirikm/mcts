@@ -36,7 +36,7 @@ object Main {
         println(fansi.Bold.On(s"$winner won"))
         if (Console.in != null) StdIn.readLine()
 
-      case Ongoing(actions) =>
+      case Ongoing(_) =>
         val solver = new MonteCarlo(game)
 //        val runner = new RunSeq(solver)
         val runner       = new RunPar(solver, parallelism = 6)

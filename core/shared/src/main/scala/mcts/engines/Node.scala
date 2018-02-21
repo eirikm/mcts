@@ -2,7 +2,7 @@ package mcts.engines
 
 import mcts.Util
 
-final class Node[@specialized(Int, AnyRef) Action](
+final class Node[Action](
     val numWins:    Int,
     val numPlays:   Int,
     val children:   debox.Map[Action, Node[Action]],

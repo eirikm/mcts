@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
 import scala.reflect.ClassTag
 
-class RunPar[S, @specialized(Int, AnyRef) A: ClassTag, P](val solver: MonteCarlo[S, A, P], parallelism: Int) {
+class RunPar[S, A: ClassTag, P](val solver: MonteCarlo[S, A, P], parallelism: Int) {
 
   // Run monte carlo search until cpuTime hits a certain value.
   def timedMCTS(duration: Duration, state: S): Node[A] = {

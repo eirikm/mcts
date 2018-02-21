@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
 import scala.reflect.ClassTag
 
-class RunSeq[State, @specialized(Int, AnyRef) Action: ClassTag, Player](
+class RunSeq[State, Action: ClassTag, Player](
     val solver: MonteCarlo[State, Action, Player]
 ) {
 

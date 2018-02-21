@@ -10,7 +10,7 @@ package mcts
   * @tparam Action The actions a player can perform
   * @tparam Player A player in the specified game
   */
-trait Game[State, @specialized(Int, AnyRef) Action, Player] {
+trait Game[State, Action, Player] {
   def startingState: State
 
   def currentPlayer(state: State): Player

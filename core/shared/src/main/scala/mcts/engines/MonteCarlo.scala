@@ -15,7 +15,7 @@ import scala.util.Random
   * @tparam Action actions that can be done in a round in the game
   * @tparam Player players that are playing the game
   */
-final class MonteCarlo[State, @specialized(Int, AnyRef) Action: ClassTag, Player](
+final class MonteCarlo[State, Action: ClassTag, Player](
     val game: Game[State, Action, Player]
 ) {
 
