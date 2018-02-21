@@ -29,14 +29,17 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi"   %%% "fansi"     % "0.2.5",
-      "org.scalatest" %%% "scalatest" % "3.2.0-SNAP10" % Test
+      "org.scalatest" %%% "scalatest" % "3.1.0-SNAP6" % Test
     )
   )
   .jvmSettings(scala212Settings)
   .jsSettings(scala212Settings)
-  .jsSettings(scalaJSUseMainModuleInitializer := true)
+  .jsSettings(
+    scalaJSUseMainModuleInitializer := true
+  )
   .nativeSettings(scala211Settings)
+  .nativeSettings(test := {}) //tests don't work in native
 
-lazy val coreJvm    = core.jvm
-lazy val coreJs     = core.js
-lazy val coreNative = core.native
+lazy val coreJvm = core.jvm
+lazy val coreJs  = core.js
+lazy val coreNative  = core.native
