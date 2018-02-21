@@ -1,4 +1,4 @@
-package mcts.engines
+package mcts.solver
 
 import mcts._
 

@@ -3,7 +3,7 @@ package mcts.games
 import mcts.data.Array2d
 import mcts.data.Array2d.Index
 import mcts.{renderers,          Draw, Ongoing, Winner}
-import mcts.engines.{MonteCarlo, RunSeq}
+import mcts.solver.{MonteCarlo, RunSeq}
 import org.scalatest.{FunSuite,  Matchers}
 
 import scala.concurrent.duration._

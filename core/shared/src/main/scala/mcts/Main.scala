@@ -1,7 +1,7 @@
 package mcts
 
 import fansi.Str
-import mcts.engines.{MonteCarlo, Node, RunPar}
+import mcts.solver.{MonteCarlo, Node, RunPar}
 import mcts.games.Red
 import mcts.renderers._
 
