@@ -13,7 +13,7 @@ The code is written in the functional programming paradigm. For performance reas
 but it's completely referentially transparent. 
 There are mutable optimizations within methods, but as long as the interface is kept immutable, that's always a nice thing to do!
  
-### Building
+### Building/Running
 
 You will need sbt. 
 ```bash
@@ -29,14 +29,16 @@ $ sbt
 # Wait while sbt downloads the internet, then type
 
 sbt> coreJVM/run
+```
 
-# Or for Scala.js (assuming you have node installed):
-
+### Scala.js
+If you have node.js installed, you can try:
+```
 sbt> coreJS/run
+```
 
-# Or Scala Native.
-# It needs a few system dependencies, consult 
-[Scala Native environment setup](http://www.scala-native.org/en/latest/user/setup.html) if it fails.
-
+### Scala Native
+It needs a few system dependencies, consult [Scala Native environment setup](http://www.scala-native.org/en/latest/user/setup.html) if it fails.
+```
 sbt> coreNative/run
 ```
