@@ -18,13 +18,13 @@ There are mutable optimizations within methods, but as long as the interface is 
 You will need sbt. 
 ```bash
 
-wget https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt -O ~/bin/sbt
-chmod +x ~/bin/sbt
+$ wget https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt -O ~/bin/sbt
+$ chmod +x ~/bin/sbt
 
 //in ~/.profile if you want
 export PATH=~/bin:$PATH
 
-sbt
+$ sbt
 
 # Wait while sbt downloads the internet, then type
 
@@ -34,4 +34,9 @@ sbt> coreJVM/run
 
 sbt> coreJS/run
 
+# Or Scala Native.
+# It needs a few system dependencies, consult 
+[Scala Native environment setup](http://www.scala-native.org/en/latest/user/setup.html) if it fails.
+
+sbt> coreNative/run
 ```
