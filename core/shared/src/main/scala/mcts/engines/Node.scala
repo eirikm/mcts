@@ -13,9 +13,9 @@ final class Node[Action](
     val newChildren = children.updated(action, newChild)
 
     new Node(
-      children   = newChildren,
-      numWins    = numWins + lastPayout,
-      numPlays   = numPlays + 1,
+      children = newChildren,
+      numWins = numWins + lastPayout,
+      numPlays = numPlays + 1,
       lastPayout = newChild.lastPayout
     )
   }
@@ -32,10 +32,10 @@ object Node {
     */
   def combine[A](x: Node[A], y: Node[A]): Node[A] =
     new Node(
-      numWins    = x.numWins + y.numWins,
-      numPlays   = x.numPlays + y.numPlays,
-      children   = combineChildren(x.children, y.children),
-      lastPayout = math.max(x.lastPayout, y.lastPayout)
+      numWins = x.numWins + y.numWins,
+      numPlays = x.numPlays + y.numPlays,
+      children = combineChildren(x.children, y.children),
+      lastPayout = math.max(x.lastPayout,    y.lastPayout)
     )
 
   private def combineChildren[A](xs: Map[A, Node[A]], ys: Map[A, Node[A]]): Map[A, Node[A]] = {

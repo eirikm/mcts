@@ -1,9 +1,9 @@
 val commonSettings = Seq(
   scalaVersion := "2.12.4",
   libraryDependencies ++= Seq(
-    "org.typelevel"  %%% "cats-core" % "1.0.1",
-    "com.lihaoyi"    %%% "pprint"    % "0.5.3",
-    "org.scalatest"  %%% "scalatest" % "3.0.4" % Test
+    "org.typelevel" %%% "cats-core" % "1.0.1",
+    "com.lihaoyi"   %%% "pprint"    % "0.5.3",
+    "org.scalatest" %%% "scalatest" % "3.0.4" % Test
   )
 )
 

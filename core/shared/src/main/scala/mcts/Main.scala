@@ -8,12 +8,11 @@ import mcts.renderers._
 import scala.annotation.tailrec
 import scala.concurrent.duration._
 import scala.io.StdIn
-import scala.reflect.ClassTag
 
 object Main {
   // format: off
   @tailrec
-  private def step[State, Action: ClassTag, Player]
+  private def step[State, Action, Player]
                   (game:      Game[State, Action, Player],
                    duration:  Duration)
                   (state:     State           = game.startingState,

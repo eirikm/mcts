@@ -4,11 +4,8 @@ import java.lang.System.currentTimeMillis
 
 import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
-import scala.reflect.ClassTag
 
-class RunSeq[State, Action: ClassTag, Player](
-    val solver: MonteCarlo[State, Action, Player]
-) {
+class RunSeq[State, Action, Player](val solver: MonteCarlo[State, Action, Player]) {
 
   /* Run monte carlo search for a given duration */
   def timedMCTS(duration: Duration, state: State): Node[Action] = {

@@ -13,7 +13,7 @@ object Util {
     map.keys.foreach { k =>
       val value = f(map(k))
       if (maxValue < value) {
-        maxK     = k
+        maxK = k
         maxValue = value
       }
     }
