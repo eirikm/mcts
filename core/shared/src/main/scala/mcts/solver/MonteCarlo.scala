@@ -1,8 +1,11 @@
 package mcts.solver
 
+import java.lang.System.currentTimeMillis
+
 import mcts._
 
 import scala.annotation.tailrec
+import scala.concurrent.duration.Duration
 import scala.util.Random
 
 /**
@@ -16,7 +19,26 @@ import scala.util.Random
   */
 class MonteCarlo[State, Action, Player](val game: Game[State, Action, Player]) {
 
-  def select(currentState: State, currentNode: Node[Action], player: Player): Node[Action] =
+  //todo: split! these are too many concerns
+  def nextAction(state: State, duration: Duration, runner: Runner[Node[Action]]): Node[Action] = {
+    val node     = new Node[Action](0, 0, Map.empty, 0)
+    val stopTime = currentTimeMillis + duration.toMillis
+    val player   = game.currentPlayer(state)
+
+    @tailrec
+    def go(n: Node[Action]): Node[Action] = {
+      val newNode = select(state, n, player)
+
+      if (currentTimeMillis > stopTime)
+        newNode
+      else
+        go(newNode)
+    }
+
+    runner(() => go(node))
+  }
+
+  private def select(currentState: State, currentNode: Node[Action], player: Player): Node[Action] =
     game.gameResult(currentState) match {
 
       case gameEnded: GameEnded[Player] =>

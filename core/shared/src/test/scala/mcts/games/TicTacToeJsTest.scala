@@ -2,17 +2,16 @@ package mcts.games
 
 import mcts.data.Array2d
 import mcts.data.Array2d.Index
-import mcts.{renderers,          Draw, Ongoing, Winner}
-import mcts.solver.{MonteCarlo, RunSeq}
-import org.scalatest.{FunSuite,  Matchers}
+import mcts._
+import mcts.solver.MonteCarlo
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.concurrent.duration._
 
 class TicTacToeJsTest extends FunSuite with Matchers {
   import mcts.games.TicTacToe.GameDef
 
-  val spec   = new MonteCarlo(GameDef)
-  val runner = new RunSeq(spec)
+  val solver  = new MonteCarlo(GameDef)
 
   test("should always favor the winning move in a game of Tic Tac Toe") {
     val actions = 0.until(10).map { _ =>
@@ -24,7 +23,7 @@ class TicTacToeJsTest extends FunSuite with Matchers {
             Occupied(Blue), Occupied(Blue), Empty
           )
         // format: on
-      runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
+      solver.nextAction(GameDef.startingState.copy(grid = board), 50.milli, Runner.Sequential).bestAction
     }
 
     actions.toSet should equal(Set(Index(5)))
@@ -40,7 +39,7 @@ class TicTacToeJsTest extends FunSuite with Matchers {
             Empty, Empty, Empty
           )
         // format: on
-      runner.timedMCTS(50.milli, GameDef.startingState.copy(grid = board)).bestAction
+      solver.nextAction(GameDef.startingState.copy(grid = board), 50.milli, Runner.Sequential).bestAction
     }
 
     actions.toSet should equal(Set(Index(6)))
