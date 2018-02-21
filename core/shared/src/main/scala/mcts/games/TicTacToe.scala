@@ -58,8 +58,7 @@ object TicTacToe {
   /**
     * An absolute, existing line which can form a victory for one of the players
     */
-  final class VictoryLine(_1: Index, _2: Index, _3: Index) {
-    @inline
+  class VictoryLine(_1: Index, _2: Index, _3: Index) {
     def matches(board: Array2d[Space]): Option[(RedBlue, VictoryLine)] =
       (board(_1), board(_2), board(_3)) match {
         case (Occupied(p1), Occupied(p2), Occupied(p3)) if p1 == p2 && p2 == p3 =>

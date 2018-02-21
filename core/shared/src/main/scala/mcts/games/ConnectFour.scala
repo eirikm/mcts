@@ -18,9 +18,9 @@ object ConnectFour {
     numRounds     = 0
   )
 
-  final case class LastAction(player: RedBlue, column: Column, row: Row)
+  case class LastAction(player: RedBlue, column: Column, row: Row)
 
-  final case class State(
+  case class State(
       board:         Array2d[Space],
       currentPlayer: RedBlue,
       lastActionOpt: Option[LastAction],

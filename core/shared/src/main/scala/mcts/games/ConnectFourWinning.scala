@@ -6,10 +6,10 @@ import mcts.games.ConnectFour.EmptyState
 
 object ConnectFourWinning {
   /* A point relative to another point */
-  private final case class RelPoint(x: Int, y: Int)
+  private case class RelPoint(x: Int, y: Int)
 
   /* A line relative to a point */
-  private final case class RelLine(_1: RelPoint, _2: RelPoint, _3: RelPoint, _4: RelPoint)
+  private case class RelLine(_1: RelPoint, _2: RelPoint, _3: RelPoint, _4: RelPoint)
 
   /* These describe all winning lines a given point can theoretically be a part of.
    * Many of them will be out of bounds for a given point, so those lines are pruned below
@@ -69,8 +69,7 @@ object ConnectFourWinning {
   /**
     * An absolute, existing line which can form a victory for one of the players
     */
-  final class VictoryLine(_1: Index, _2: Index, _3: Index, _4: Index) {
-    @inline
+  class VictoryLine(_1: Index, _2: Index, _3: Index, _4: Index) {
     def matches(board: Array2d[Space], player: RedBlue): Option[(RedBlue, VictoryLine)] =
       (board(_1), board(_2), board(_3), board(_4)) match {
         case (Occupied(`player`), Occupied(`player`), Occupied(`player`), Occupied(`player`)) =>

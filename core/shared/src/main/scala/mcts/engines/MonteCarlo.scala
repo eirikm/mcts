@@ -14,7 +14,7 @@ import scala.util.Random
   * @tparam Action actions that can be done in a round in the game
   * @tparam Player players that are playing the game
   */
-final class MonteCarlo[State, Action, Player](val game: Game[State, Action, Player]) {
+class MonteCarlo[State, Action, Player](val game: Game[State, Action, Player]) {
 
   def select(currentState: State, currentNode: Node[Action], player: Player): Node[Action] =
     game.gameResult(currentState) match {

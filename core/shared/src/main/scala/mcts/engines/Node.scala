@@ -2,7 +2,7 @@ package mcts.engines
 
 import mcts.Util
 
-final class Node[Action](
+class Node[Action](
     val numWins:    Int,
     val numPlays:   Int,
     val children:   Map[Action, Node[Action]],

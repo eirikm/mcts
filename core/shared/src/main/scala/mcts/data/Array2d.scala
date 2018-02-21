@@ -6,7 +6,7 @@ import Array2d.{Column, Index, Row}
 /**
   * Squeeze a 2D array into a 1D array. Provide an immutable interface.
   */
-final class Array2d[@specialized T](val array: Array[T], val numX: Int, val numY: Int) {
+class Array2d[@specialized T](val array: Array[T], val numX: Int, val numY: Int) {
 
   def index(col: Column, row: Row): Index =
     Index(col * numY + row)
