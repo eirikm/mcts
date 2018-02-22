@@ -1,6 +1,6 @@
 ## Hi there!
 
-Welcome to the Scala solution for JavaBin's Language Shootout 2018.
+Welcome to the Scala solution for JavaBin's [Language Shootout 2018](https://www.meetup.com/javaBin/events/247499235/).
 
 This code solves two popular board games using the Monte Carlo Tree Search algorithm.
 
@@ -21,7 +21,7 @@ You will need sbt.
 $ wget https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt -O ~/bin/sbt
 $ chmod +x ~/bin/sbt
 
-//in ~/.profile if you want
+# in ~/.profile if you want
 export PATH=~/bin:$PATH
 
 $ sbt
